@@ -12,14 +12,22 @@ import paymentRouter from "./routes/payment.route.js"
 const app = express()
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
-            callback(null, true)
+        const allowedOrigins = [
+            "https://frontend-3x52.onrender.com"
+        ];
+
+        if (
+            !origin ||
+            /^http:\/\/localhost:\d+$/.test(origin) ||
+            allowedOrigins.includes(origin)
+        ) {
+            callback(null, true);
         } else {
-            callback(new Error("Not allowed by CORS"))
+            callback(new Error("Not allowed by CORS"));
         }
     },
     credentials: true
-}))
+}));
 
 app.use(express.json())
 app.use(cookieParser())
